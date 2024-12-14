@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -13,9 +13,12 @@ import {
   FaTag,
   FaShoppingCart,
 } from "react-icons/fa";
+import { useAuth } from "../store/auth";
 
 const GameDetails = () => {
   const { id } = useParams();
+  const { isLoggedin } = useAuth();
+  const navigate = useNavigate();
   const [game, setGame] = useState(null);
   const [screenshots, setScreenshots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +26,12 @@ const GameDetails = () => {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
+  useEffect(() => {
+    // Redirect to register if not logged in
+    if (!isLoggedin) {
+      return navigate("/register");
+    }
+  }, []);
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
@@ -86,7 +95,7 @@ const GameDetails = () => {
   return (
     <div className="bg-zinc-800 min-h-screen p-8 text-white">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-red-500">{game.name}</h1>
+        <h1 className="text-4xl font-bold mb-6 text-blue-500">{game.name}</h1>
         <img
           src={game.background_image}
           alt={game.name}
