@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Accordion from "../components/Faq";
 const About = () => {
   const navigate = useNavigate();
   return (
@@ -75,6 +76,9 @@ const About = () => {
             Contact Us
           </button>
         </div>
+      </section>
+      <section className="bg-zinc-900 py-10 px-6">
+        <Accordion />
       </section>
 
       {/* Footer Section */}
